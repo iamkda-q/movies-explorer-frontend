@@ -1,0 +1,10 @@
+.main__title {
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 1.125;
+    letter-spacing: -0.04em;
+    padding-bottom: 23px;
+    border-bottom: 1px solid black;
+    align-self: flex-start;
+    width: 100%;
+}
