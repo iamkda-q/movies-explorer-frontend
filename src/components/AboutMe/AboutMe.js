@@ -5,10 +5,10 @@ import MainTitle from "../MainTitle/MainTitle";
 
 function AboutMe() {
     return (
-        <section className="about-me">
-            <MainTitle text="Студент" mrgBot={"66px"} />
+        <section className="about-me app__position">
+            <MainTitle text="Студент" />
             <div className="about-me__info">
-                <div className="about-me__text">
+                <div className="about-me__text-cont">
                     <h2 className="about-me__name">Дмитрий</h2>
                     <p className="about-me__prof">
                         Инженер&#8209;электротехник (по ночам в тайне от всех
@@ -22,8 +22,8 @@ function AboutMe() {
                         как прошёл курс по веб-разработке, начал заниматься
                         фриланс-заказами и ушёл с постоянной работы.
                     </p>
-                    <Link className="about-me__link">VK</Link>
-                    <Link className="about-me__link">Github</Link>
+                    <a className="about-me__link app__link" href="https://vk.com/id107695180" target="blank">VK</a>
+                    <a className="about-me__link app__link" href="https://github.com/iamkda-q" target="blank">Github</a>
                 </div>
                 <img
                     src={photo}
@@ -34,22 +34,22 @@ function AboutMe() {
             <h3 className="about-me__portfolio">Портфолио</h3>
             <ul className="about-me__projects">
                 <li className="about-me__project">
-                    <Link className="about-me__project-link">
+                    <a className="about-me__project-link app__link" href="/">
                         <p>Статичный сайт</p>
                         <div className="about-me__link-icon"></div>
-                    </Link>
+                    </a>
                 </li>
                 <li className="about-me__project">
-                    <Link className="about-me__project-link">
+                    <a className="about-me__project-link app__link" href="/">
                         <p>Адаптивный сайт</p>
                         <div className="about-me__link-icon"></div>
-                    </Link>
+                    </a>
                 </li>
                 <li className="about-me__project">
-                    <Link className="about-me__project-link">
+                    <a className="about-me__project-link app__link" href="/">
                         <p>Одностраничное приложение</p>
                         <div className="about-me__link-icon"></div>
-                    </Link>
+                    </a>
                 </li>
             </ul>
         </section>

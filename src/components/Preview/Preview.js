@@ -4,7 +4,7 @@ import "./Preview.css"
 function Preview() {
   return (
     <section className="preview">
-      <div className="preview__container">
+      <div className="preview__container app__position">
         <h1 className="preview__title">Учебный проект студента факультета Веб-разработки.</h1>
         <img src={previewPattern} alt="Встречающий посетителя узор" className="preview__pattern" />
       </div>

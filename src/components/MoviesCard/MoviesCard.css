@@ -1,0 +1,84 @@
+.movies__movie {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.movies__img {
+    width: 100%;
+    max-height: 201px;
+}
+
+.movies__info {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 14px;
+}
+
+.movies__name {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.23;
+}
+
+.movies__duration {
+    font-size: 11px;
+    line-height: 0.9;
+    color: rgba(160, 160, 160, 1);
+    padding: 3px 4px;
+    border-radius: 3px;
+    background: rgba(249, 249, 249, 1);
+    text-align: center;
+}
+
+.movies__save {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 72px;
+    height: 21px;
+    border-radius: 48px;
+    background-color: white;
+    color: black;
+    font-size: 10px;
+    line-height: 0.9;
+    border: none;
+}
+
+.movies__saved {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 21px;
+    height: 21px;
+    border-radius: 30px;
+    border: none;
+    background-color: rgba(255, 64, 98, 1);
+}
+
+.movies__saved::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-image: url("../../assets/images/saved-icon.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: calc(50% - 4px);
+    left: calc(50% - 4px);
+}
+
+@media screen and (max-width: 850px) {
+
+    .movies__img {
+        max-height: 190px;
+    }
+
+    .movies__info {
+        padding: 25px;
+    }
+}

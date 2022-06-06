@@ -2,25 +2,40 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
-import Preview from "../Preview/Preview";
-import Techs from "../Techs/Techs";
-import AboutProject from "../AboutProject/AboutProject";
-import AboutMe from "../AboutMe/AboutMe";
+import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
+import Profile from "../Profile/Profile";
+import Register from "../Register/Register";
+import Login from "../Login/Login";
+import NotFound from "../NotFound/NotFound";
+
 
 function App() {
     return (
-        <div className="App">
-            <Header />
+        <div className="app">
+            <Route path={["/movies", "/saved-movies", "/profile", "/"]} exact>
+                <Header />
+            </Route>
             <Switch>
-                <Route exact path="/">
-                    <Preview />
-                    <AboutProject />
-                    <Techs />
-                    <AboutMe />
+                <Route path={["/movies", "/saved-movies", "/"]} exact>
+                    <Main />
+                </Route>
+                <Route path="/profile">
+                    <Profile />
+                </Route>
+                <Route path="/signup">
+                    <Register />
+                </Route>
+                <Route path="/signin">
+                    <Login />
                 </Route>
             </Switch>
-            <Footer />
+            <Route path={["/movies", "/saved-movies", "/"]} exact>
+                <Footer />
+            </Route>
+            <Route path="/404" exact>
+                <NotFound />
+            </Route>
         </div>
     );
 }

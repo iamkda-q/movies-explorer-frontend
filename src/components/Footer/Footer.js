@@ -1,28 +1,28 @@
-import { Link } from "react-router-dom";
+import React from "react";
 import "./Footer.css";
 
 function Footer() {
     return (
-        <footer className="footer">
-            <address className="footer__sponsors">
+        <footer className="footer app__position">
+            <p className="footer__sponsors">
                 Учебный проект Яндекс.Практикум х BeatFilm.
-            </address>
+            </p>
             <div className="footer__info">
-                <p className="footer__copyright">
+                <address className="footer__copyright">
                     &copy; 2022. Коннов Дмитрий
-                </p>
+                </address>
                 <nav>
                     <ul className="footer__nav">
                         <li>
-                            <Link className="footer__link" to="/">
+                            <a className="footer__link app__link" href="https://practicum.yandex.ru/" target="blank">
                                 Яндекс.Практикум
-                            </Link>
+                            </a>
                         </li>
                         <li>
-                            <p className="footer__link" to="/">Github</p>
+                            <a className="footer__link app__link" href="https://github.com/iamkda-q" target="blank">Github</a>
                         </li>
                         <li>
-                            <Link className="footer__link" to="/">Facebook</Link>
+                            <a className="footer__link app__link" href="https://vk.com/id107695180" target="blank">VK</a>
                         </li>
                     </ul>
                 </nav>

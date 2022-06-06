@@ -1,0 +1,138 @@
+.search {
+    max-width: 1280px;
+    padding: 70px 70px 10px;
+    margin: 0 auto;
+}
+
+.search__form {
+    height: 72px;
+    padding: 0 25px 0 30px;
+    display: grid;
+    grid-template-columns: minmax(min-content, max-content) 1fr repeat(3, minmax(min-content, max-content));
+    align-items: center;
+    margin-bottom: 69px;
+    background-color: rgba(249, 249, 249, 1);
+    border-radius: 9px;
+    position: relative;
+}
+
+.search__form::after {
+    content: "";
+    width: 100%;
+    position: absolute;
+    bottom: -70px;
+    border-bottom: 1px solid rgba(232, 232, 232, 1);
+    pointer-events: none;
+}
+
+.search__input-label {
+    position: absolute;
+}
+
+.search__icon {
+    width: auto;
+    height: auto;
+}
+
+.search__input {
+    margin-left: 21px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    line-height: 1.11;
+    background-color: inherit;
+}
+
+.search__button {
+    width: 58.65px;
+    height: 34px;
+    border-radius: 48px;
+    background-color: black;
+    color: white;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 1.64;
+    margin-right: 30px;
+    position: relative;
+}
+
+.search__shorts-text {
+    font-size: 13px;
+    line-height: 1.38;
+}
+
+.search__shorts-label {
+    cursor: pointer;
+    margin: 0 14px 0 29px;
+    position: relative;
+}
+
+.search__shorts-label::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    bottom: -10px;
+    height: 40px;
+    border-left: 1px solid rgba(232, 232, 232, 1);
+    pointer-events: none;
+}
+
+.search__checkbox-div {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    border-radius: 20px;
+    background: rgba(235, 235, 235, 1);
+    transition: 0.2s;
+}
+.search__checkbox-div:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(245, 245, 245, 1);
+    transition: 0.2s;
+}
+.search__shorts {
+    position: absolute;
+    visibility: hidden;
+}
+
+.search__shorts:checked + .search__checkbox-div {
+    background: rgba(43, 224, 128, 1);
+}
+.search__shorts:checked + .search__checkbox-div:before {
+    transform: translateX(16px);
+}
+
+@media screen and (max-width: 850px) {
+
+    .search {
+        padding: 80px 30px 10px;
+    }
+
+    .search__form {
+        padding-right: 20px;
+    }
+
+    .search__form::after {
+        bottom: -109px;
+    }
+
+    .search__input {
+        margin-left: 16px;
+    }
+
+    .search__button {
+        margin-right: 19px;
+    }
+
+    .search__shorts-label {
+        margin-right: 15px;
+        margin-left: 19px;
+    }
+}

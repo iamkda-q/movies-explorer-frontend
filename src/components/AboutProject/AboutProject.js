@@ -3,8 +3,8 @@ import MainTitle from "../MainTitle/MainTitle";
 
 function AboutProject() {
   return (
-    <section className="about-project">
-        <MainTitle text="О проекте" mrgBot={"70px"}/>
+    <section className="about-project app__position">
+        <MainTitle text="О проекте" />
         <div className="about-project__info">
             <h3 className="about-project__subtitle">Дипломный проект включал 5 этапов</h3>
             <p className="about-project__text">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>

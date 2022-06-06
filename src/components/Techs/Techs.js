@@ -4,8 +4,8 @@ import MainTitle from "../MainTitle/MainTitle";
 function Techs() {
     return (
         <section className="techs">
-            <div className="techs__container">
-                <MainTitle text="Технологии" mrgBot={"90px"} />
+            <div className="techs__container app__position">
+                <MainTitle text="Технологии" />
                 <h3 className="techs__title">7 технологий</h3>
                 <p className="techs__subtitle">
                     На курсе веб-разработки мы освоили технологии, которые
