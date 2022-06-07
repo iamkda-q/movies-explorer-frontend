@@ -24,10 +24,13 @@
         padding-right: 30px;
     }
 
-    .more__button {
-        padding: 70px 30px 12px;
-        grid-template-columns: repeat(2, 1fr);
-        row-gap: 22px;
+}
+
+@media screen and (max-width: 850px) {
+
+    .more {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
 }
