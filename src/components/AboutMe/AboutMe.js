@@ -34,22 +34,22 @@ function AboutMe() {
             <h3 className="about-me__portfolio">Портфолио</h3>
             <ul className="about-me__projects">
                 <li className="about-me__project">
-                    <a className="about-me__project-link app__link" href="/">
+                    <a className="about-me__project-link app__link" href="https://iamkda-q.github.io/cssMemSlider/cssMemSlider/" target="blank">
                         <p>Статичный сайт</p>
                         <div className="about-me__link-icon"></div>
                     </a>
                 </li>
                 <li className="about-me__project">
-                    <a className="about-me__project-link app__link" href="/">
+                    <a className="about-me__project-link app__link" href="https://rolling-scopes-school.github.io/iamkda-q-JSFE2022Q1/shelter/main/" target="blank">
                         <p>Адаптивный сайт</p>
                         <div className="about-me__link-icon"></div>
                     </a>
                 </li>
                 <li className="about-me__project">
-                    <a className="about-me__project-link app__link" href="/">
+                    <Link className="about-me__project-link app__link" to="/movies">
                         <p>Одностраничное приложение</p>
                         <div className="about-me__link-icon"></div>
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </section>
