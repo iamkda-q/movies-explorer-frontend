@@ -1,3 +1,7 @@
-export const pathsFooter = ["/profile", "/signin", "/signup"];
-export const pathsHeader = ["/signin", "/signup"];
+const profilePlaceholders = {
+    text: "Введите имя",
+    email: "Введите email",
+    password: "Введите пароль"
+};
 
+export { profilePlaceholders };

@@ -1,4 +1,26 @@
+@keyframes smoorf-outline {
+    0% {
+        outline: 1px rgba(0, 0, 0, 0) solid;
+    }
+    20% {
+        outline: 1px rgba(0, 0, 0, 0.2) solid;
+    }
+    40% {
+        outline: 1px rgba(0, 0, 0, 0.4) solid;
+    }
+    60% {
+        outline: 1px rgba(0, 0, 0, 0.6) solid;
+    }
+    80% {
+        outline: 1px rgba(0, 0, 0, 0.8) solid;
+    }
+    100% {
+        outline: 1px rgba(0, 0, 0, 1) solid;
+    }
+}
+
 .reg-input__form-group {
+    max-width: 396px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -17,6 +39,7 @@
 
 .reg-input__input {
     width: 100%;
+    font-family: "Inter", sans-serif;
     font-size: 13px;
     line-height: 1.23;
     border: none;
@@ -25,6 +48,10 @@
     border-radius: 8px;
     padding: 15px;
     margin: 10px 0 20px;
+}
+
+.reg-input__input:focus {
+    animation: smoorf-outline .6s ease-in-out forwards;
 }
 
 .reg-input__error {

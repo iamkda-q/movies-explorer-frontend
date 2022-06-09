@@ -1,7 +1,7 @@
 .reg-header {
-    width: 396px;
+    max-width: 396px;
     margin: 0 auto;
-    padding: 232px 0 40px;
+    padding: 70px 0 40px;
     display: flex;
     row-gap: 40px;
     flex-direction: column;
@@ -11,4 +11,28 @@
     font-weight: 500;
     font-size: 24px;
     line-height: 1.21;
+}
+
+@media screen and (max-width: 850px) {
+
+    .reg-header {
+        padding-top: 232px;
+        width: calc(39600vw / 768);
+    }
+
+}
+
+@media screen and (max-width: 550px) {
+
+    .reg-header {
+        width: calc(26000vw / 320);
+        padding: 56px 0 80px;
+        row-gap: 50px;
+        align-items: center;
+    }
+
+    .reg-header__title {
+        text-align: center;
+    }
+
 }

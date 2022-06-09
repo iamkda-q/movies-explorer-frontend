@@ -25,6 +25,7 @@ function Profile() {
                         autoComplete="off"
                         value={name}
                         onChange={handleChangeName}
+                        placeholder="Введите имя"
                     />
                 </div>
                 <div className="profile__form-group">
@@ -35,15 +36,16 @@ function Profile() {
                         autoComplete="off"
                         value={email}
                         onChange={handleChangeEmail}
+                        placeholder="Введите email"
                     />
                 </div>
-                <button className="profile__button profile__button_edit app__link-button-type hidden">
+                <button className="profile__button profile__button_edit app__link-button-type">
                     Редактировать
                 </button>
-                <button className="profile__button profile__button_exit app__link-button-type hidden">
+                <button className="profile__button profile__button_exit app__link-button-type">
                     Выйти из аккаунта
                 </button>
-                <div className="profile__button-with-error">
+                <div className="profile__button-with-error hidden">
                     <span className="profile__error">
                         При обновлении профиля произошла ошибка.
                     </span>

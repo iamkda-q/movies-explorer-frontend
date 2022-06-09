@@ -42,9 +42,11 @@
 .search__input {
     border: none;
     outline: none;
+    font-family: "Inter", sans-serif;
     font-size: 18px;
     line-height: 1.11;
     background-color: inherit;
+    width: 100%;
 }
 
 .search__button {
@@ -54,6 +56,7 @@
     border-radius: 48px;
     background-color: black;
     color: white;
+    font-family: "Inter", sans-serif;
     font-weight: 500;
     font-size: 11px;
     line-height: 1.64;
@@ -173,6 +176,7 @@
         margin-top: 46px;
         background-color: white;
         column-gap: 13px;
+        padding: 0;
     }
 
     .search__shorts-label::before {
@@ -189,6 +193,7 @@
     }
 
     .search__form {
+        padding: 0 19px;
         grid-template-columns:1fr minmax(min-content, max-content);
     }
 

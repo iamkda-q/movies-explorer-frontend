@@ -9,9 +9,11 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import More from "../More/More";
+import SavedDivider from "../SavedDivider/SavedDivider";
+import Burger from "../Burger/Burger";
+import image from "../../assets/images/1.png";
 
-
-function Main() {
+function Main({ isBurgerOpen, showBurger }) {
     return (
         <main>
             <Switch>
@@ -22,35 +24,38 @@ function Main() {
                     <AboutMe />
                 </Route>
                 <Route path="/movies">
+                    <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
                     <SearchForm />
                     <MoviesCardList>
-                        <MoviesCard />
-                        <MoviesCard />                      
-                        <MoviesCard />                      
-                        <MoviesCard />                      
-                        <MoviesCard />                      
-                        <MoviesCard />                      
-                        <MoviesCard />                      
-                        <MoviesCard />                      
-                        <MoviesCard />        
-                        <MoviesCard />                      
-                        <MoviesCard />                      
-                        <MoviesCard />                
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
                     </MoviesCardList>
                     <More />
                 </Route>
                 <Route path="/saved-movies">
+                    <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
                     <SearchForm />
                     <MoviesCardList>
-                        <MoviesCard />
-                        <MoviesCard />                      
-                        <MoviesCard />                                   
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
                     </MoviesCardList>
+                    <SavedDivider />
                 </Route>
             </Switch>
         </main>
     );
 }
-
 
 export default Main;

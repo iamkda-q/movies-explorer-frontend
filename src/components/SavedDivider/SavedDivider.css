@@ -1,0 +1,19 @@
+.saved-devider {
+    height: 214px;
+}
+
+@media screen and (max-width: 850px) {
+
+    .saved-devider {
+        height: 165px;
+    }
+
+}
+
+@media screen and (max-width: 550px) {
+
+    .saved-devider {
+        height: 140px;
+    }
+
+}

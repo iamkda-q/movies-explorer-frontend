@@ -1,12 +1,13 @@
+import { Link } from "react-router-dom";
 import "./Logo.css";
 
 function Logo({ mini }) {
     return (
-        <div className="logo">
-        <div>
-            <div></div>
-        </div>
-    </div>
+        <Link to="/" className="logo">
+            <div>
+                <div></div>
+            </div>
+        </Link>
     );
 }
 

@@ -8,19 +8,27 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
+import Burger from "../Burger/Burger";
 
 
 function App() {
+    const [burgerOpen, setBurgerOpen] = React.useState(false);
+
+    function showBurger() {
+        setBurgerOpen(!burgerOpen);
+    }
+
     return (
         <div className="app">
             <Route path={["/movies", "/saved-movies", "/profile", "/"]} exact>
-                <Header />
+                <Header showBurger={showBurger}/>
             </Route>
             <Switch>
                 <Route path={["/movies", "/saved-movies", "/"]} exact>
-                    <Main />
+                    <Main isBurgerOpen={burgerOpen} showBurger={showBurger}/>
                 </Route>
                 <Route path="/profile">
+                    <Burger isOpen={burgerOpen} showBurger={showBurger}/>
                     <Profile />
                 </Route>
                 <Route path="/signup">

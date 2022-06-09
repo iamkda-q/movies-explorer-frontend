@@ -1,15 +1,14 @@
 // import { Route } from "react-router-dom";
 import { Route } from "react-router-dom";
 import "./MoviesCard.css";
-import image from "../../assets/images/1.png";
 
-function MoviesCard() {
+function MoviesCard({ image, name, duration }) {
     return (
         <div className="movies__movie">
-            <img src={image} alt="" className="movies__img" />
+            <img src={image} alt={`Заставка фильма "${name}"`} className="movies__img" />
             <div className="movies__info">
-                <p className="movies__name">33 слова о дизайне</p>
-                <span className="movies__duration">1ч 17м</span>
+                <p className="movies__name">{name}</p>
+                <span className="movies__duration">{duration}</span>
             </div>
             <button className="movies__delete"></button>
             <Route path="/movies" exact>

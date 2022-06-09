@@ -43,11 +43,16 @@
 
 .profile__input {
     width: 100%;
+    font-family: "Inter", sans-serif;
     font-size: 11px;
     line-height: 1.18;
     border: none;
     outline: none;
     text-align: right;
+}
+
+.profile__input:focus {
+    animation: smoorf-outline .6s ease-in-out forwards;
 }
 
 .profile__label {
@@ -56,6 +61,7 @@
 }
 
 .profile__button {
+    font-family: "Inter", sans-serif;
     font-size: 13px;
     line-height: 1.23;
     border: none;
@@ -68,6 +74,7 @@
 }
 
 .profile__button_exit {
+    font-weight: 500;
     color: rgba(255, 64, 98, 1);
 }
 
@@ -99,3 +106,39 @@
     bottom: 65px;
     text-align: center;
 }
+
+@media screen and (max-width: 850px) {
+
+    .profile {
+        padding: 236px 0 269px;
+        row-gap: 96px;
+    }
+
+    .profile__form-group:nth-of-type(2) {
+        margin-bottom: 210px;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+
+    .profile {
+        padding: 70px 0 40px;
+        row-gap: 80px;
+    }
+
+    .profile__form {
+        width: 260px;
+    }
+
+    .profile__form-group:nth-of-type(2) {
+        margin-bottom: 379px;
+    }
+
+    .profile__button {
+        font-size: 12px;
+        line-height: 1.25;
+    }
+
+}
+

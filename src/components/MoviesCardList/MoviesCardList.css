@@ -23,7 +23,7 @@
     .movies {
         padding: 50px 10px 13px;
         grid-template-columns: 1fr;
-        row-gap: 39px;
+        row-gap: 38px;
     }
 
 }
