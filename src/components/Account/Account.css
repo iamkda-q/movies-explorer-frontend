@@ -1,0 +1,28 @@
+.account {
+    width: 100px;
+    height: 32px;
+    border-radius: 40px;
+    background-color: white;
+    box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 7px;
+}
+
+.account div {
+    width: 26px;
+    height: 26px;
+    border-radius: 13px;
+    background-color: rgba(249, 249, 249, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3px;
+}
+
+.account__txt {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 0.92;
+}

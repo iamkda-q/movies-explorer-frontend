@@ -1,1 +1,1 @@
-# movies-explorer-frontend
+Пробный полурабочий деплой: http://movies-exp-iamkda-q.nomoreparties.sbs/

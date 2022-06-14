@@ -1,0 +1,214 @@
+.search {
+    max-width: 1280px;
+    padding: 70px 70px 70px;
+    margin: 0 auto;
+}
+
+.search__container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr minmax(min-content, max-content);
+    grid-template-rows: 72px;
+    position: relative;
+}
+
+.search__container::after {
+    content: "";
+    width: 100%;
+    position: absolute;
+    bottom: -69px;
+    border-bottom: 1px solid rgba(232, 232, 232, 1);
+}
+
+.search__form {
+    padding: 0 25px 0 30px;
+    display: grid;
+    grid-template-columns: minmax(min-content, max-content) 1fr minmax(min-content, max-content);
+    align-items: center;
+    background-color: rgba(249, 249, 249, 1);
+    border-radius: 9px 0 0 9px;
+}
+
+.search__input-label {
+    position: absolute;
+}
+
+.search__icon {
+    width: auto;
+    height: auto;
+    margin-right: 21px;
+}
+
+.search__input {
+    border: none;
+    outline: none;
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    line-height: 1.11;
+    background-color: inherit;
+    width: 100%;
+}
+
+.search__button {
+    width: 58.65px;
+    height: 34px;
+    border: none;
+    border-radius: 48px;
+    background-color: black;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 1.64;
+    cursor: pointer;
+}
+
+.search__shorts {
+    display: flex;
+    align-items: center;
+    background-color: rgba(249, 249, 249, 1);
+    border-radius: 0 9px 9px 0;
+    padding: 0 30px 0 29px;
+    column-gap: 14px;
+}
+
+.search__shorts-text {
+    font-size: 13px;
+    line-height: 1.38;
+}
+
+.search__shorts-label {
+    cursor: pointer;
+    position: relative;
+}
+
+.search__shorts-label::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    bottom: -10px;
+    height: 40px;
+    border-left: 1px solid rgba(232, 232, 232, 1);
+    pointer-events: none;
+}
+
+.search__checkbox-div {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    border-radius: 20px;
+    background: rgba(235, 235, 235, 1);
+    transition: 0.2s;
+}
+.search__checkbox-div:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(245, 245, 245, 1);
+    transition: 0.2s;
+}
+.search__shorts-chekcbox {
+    position: absolute;
+    visibility: hidden;
+}
+
+.search__shorts-chekcbox:checked + .search__checkbox-div {
+    background: rgba(43, 224, 128, 1);
+}
+.search__shorts-chekcbox:checked + .search__checkbox-div:before {
+    transform: translateX(16px);
+}
+
+@media screen and (max-width: 850px) {
+    .search {
+        padding: 80px 30px 110px;
+    }
+
+    .search__form {
+        padding-right: 19px;
+    }
+
+    .search__container::after {
+        bottom: -109px;
+    }
+
+    .search__icon {
+        margin-right: 16px;
+    }
+
+    .search__shorts {
+        padding: 0 20px 0 19px;
+        column-gap: 15px;
+    }
+
+    .search__shorts-label::before {
+        left: -19px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+
+    .search {
+        padding: 80px 30px 45px;
+    }
+
+    .search__container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 72px auto;
+    }
+
+    .search__form {
+        border-radius: 9px;
+    }
+
+    .search__container::after {
+        bottom: -45px;
+    }
+
+    .search__shorts {
+        justify-content: center;
+        margin-top: 46px;
+        background-color: white;
+        column-gap: 13px;
+        padding: 0;
+    }
+
+    .search__shorts-label::before {
+        border-left: none;
+    }
+
+}
+
+@media screen and (max-width: 550px) {
+
+    .search {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .search__form {
+        padding: 0 19px;
+        grid-template-columns:1fr minmax(min-content, max-content);
+    }
+
+    .search__icon {
+        display: none;
+    }
+
+    .search__input {
+        font-size: 14px;
+        line-height: 1.43;
+    }
+
+    .search__shorts-text {
+        font-size: 11px;
+        line-height: 1.64;
+    }
+
+}
