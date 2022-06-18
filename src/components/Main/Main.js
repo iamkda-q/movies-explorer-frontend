@@ -11,9 +11,28 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import More from "../More/More";
 import SavedDivider from "../SavedDivider/SavedDivider";
 import Burger from "../Burger/Burger";
-import image from "../../assets/images/1.png";
+import getMovies from "../../utils/MovieApi";
+import renderMovies from "../../utils/renderMovies";
 
 function Main({ isBurgerOpen, showBurger }) {
+    const [movies, setMovies] = React.useState([]);
+    const [savedMovies, setSavedMovies] = React.useState([]);
+    const [shorts, setShorts] = React.useState(false);
+
+    const changeShorts = () => {
+        setShorts(!shorts);
+    };
+
+    const handleSubmitMovies = async () => {
+        const moviesData = await getMovies();
+        console.log(moviesData);
+        setMovies(moviesData.slice(30, 36));
+    };
+
+    const saveFilm = (name) => {
+        console.log(name);
+    };
+
     return (
         <main>
             <Switch>
@@ -25,21 +44,13 @@ function Main({ isBurgerOpen, showBurger }) {
                 </Route>
                 <Route path="/movies">
                     <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
-                    <SearchForm />
+                    <SearchForm
+                        handleSubmit={handleSubmitMovies}
+                        shorts={shorts}
+                        changeShorts={changeShorts}
+                    />
                     <MoviesCardList>
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        {renderMovies(movies, shorts, saveFilm)}
                     </MoviesCardList>
                     <More />
                 </Route>
@@ -47,9 +58,7 @@ function Main({ isBurgerOpen, showBurger }) {
                     <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
                     <SearchForm />
                     <MoviesCardList>
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
-                        <MoviesCard image={image} name="33 слова о дизайне" duration="1ч 17м" />
+                        {renderMovies(savedMovies, shorts, saveFilm)}
                     </MoviesCardList>
                     <SavedDivider />
                 </Route>

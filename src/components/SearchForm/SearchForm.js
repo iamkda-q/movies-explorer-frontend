@@ -1,12 +1,19 @@
 // import { Route } from "react-router-dom";
+import React from "react";
 import "./SearchForm.css";
 import searchIcon from "../../assets/images/search-icon.svg";
 
-function SearchForm() {
+function SearchForm({ handleSubmit, shorts, changeShorts }) {
+
+    const onSubmit = (evt) => {
+        evt.preventDefault();
+        handleSubmit();
+    }
+
     return (
         <section className="search">
             <div className="search__container">
-                <form className="search__form" name="search__form">
+                <form className="search__form" name="search__form" onSubmit={onSubmit}>
                     <img
                         src={searchIcon}
                         alt="Иконка поиска"
@@ -27,6 +34,8 @@ function SearchForm() {
                 <div className="search__shorts">
                     <label className="search__shorts-label">
                         <input
+                            checked={shorts} 
+                            onChange={changeShorts}
                             type="checkbox"
                             className="search__shorts-chekcbox"
                         />
