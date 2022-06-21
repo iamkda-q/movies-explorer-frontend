@@ -49,7 +49,7 @@ function Header({ loggedIn, showBurger }) {
                             Регистрация
                         </Link>
                         <Link
-                            to="/signin"
+                            to={loggedIn ? "/movies" : "/signin"}
                             className="header__link header__link_landing
                         header__link_button-type app__link-button-type"
                         >

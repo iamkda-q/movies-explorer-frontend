@@ -2,10 +2,9 @@ import React, { Fragment, useState, useEffect } from "react";
 import RegButton from "../RegButton/RegButton";
 import RegHeader from "../RegHeader/RegHeader";
 import RegInput from "../RegInput/RegInput";
-import apiAuth from "../../utils/MainApi";
-import { useForm, useFormWithValidation } from "../../utils/useForms";
+import { useFormWithValidation } from "../../utils/useForms";
 
-function Login() {
+function Login({ handleSubmitLog, isSending }) {
     const { values, handleChange, errors, isValid } = useFormWithValidation();
 
     const [logError, setLogError] = useState({
@@ -20,20 +19,14 @@ function Login() {
         });
     }, [values]);
 
-    const onSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({ ...values });
         try {
-            const answer = await apiAuth.signIn({ ...values });
-            console.log(answer);
+            await handleSubmitLog(values);
         } catch (err) {
-            const { message } =
-                err.status === 401
-                    ? { ...await err.json() }
-                    : { message: "Проверьте правильность вводимых данных" };
             setLogError({
                 isError: true,
-                errorText: `Извините, но в доступе отказано. ${message}`,
+                errorText: `Извините, но в доступе отказано. ${err.message}`,
             });
         }
     };
@@ -43,7 +36,7 @@ function Login() {
             <RegHeader />
             <main>
                 <section className="app__reg-container">
-                    <form onSubmit={onSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <RegInput
                             value={values.email || ""}
                             label="E-mail"
@@ -61,11 +54,11 @@ function Login() {
                             {...errors.password}
                         />
                         <RegButton
-                            buttonText="Войти"
+                            buttonText={isSending ? "Пробуем..." : "Войти"}
                             spanText="Ещё не зарегистрированы?"
                             link="/signup"
                             linkText="Регистрация"
-                            isDisabled={!isValid}
+                            isDisabled={!isValid || logError.isError}
                             {...logError}
                         />
                     </form>

@@ -1,35 +1,35 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import RegButton from "../RegButton/RegButton";
 import RegHeader from "../RegHeader/RegHeader";
 import RegInput from "../RegInput/RegInput";
-import apiAuth from "../../utils/MainApi";
+import { useFormWithValidation } from "../../utils/useForms";
 
-function Register() {
-    
-    const [email, setEmail] = useState("ss@na.ru");
-    const [password, setPassword] = useState("1111");
-    const [name, setName] = useState("Виталий");
+function Register({ loggedIn, handleSubmitReg, isSending }) {
+    const { values, handleChange, errors, isValid } = useFormWithValidation();
 
-    const onSubmit = async (e) => {
+    const [regError, setRegError] = useState({
+        isError: false,
+        errorText: "",
+    });
+
+    useEffect(() => {
+        setRegError({
+            ...regError,
+            isError: false,
+        });
+    }, [values]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = await apiAuth.signIn(email, password);
-        if (answer.ok) {
-            console.log(await answer.json());
-        } else {
-            console.log("Error");
-        }
-    };
+        try {
+            await handleSubmitReg(values)
+        } catch(err) {
+            setRegError({
+                isError: true,
+                errorText: `Ошибка при регистрации: ${err.message.toLowerCase()}`,
+            });
+        };
 
-    const handleChangeName = (e) => {
-        setName(e.target.value);
-    };
-
-    const handleChangeEmail = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handleChangePassword = (e) => {
-        setPassword(e.target.value);
     };
 
     return (
@@ -37,30 +37,40 @@ function Register() {
             <RegHeader />
             <main>
                 <section className="app__reg-container">
-                    <form onSubmit={onSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <RegInput
-                            value={name}
-                            onChange={handleChangeName}
+                            value={values.name || ""}
+                            name="name"
+                            onChange={handleChange}
                             label="Имя"
                             type="text"
+                            {...errors.name}
                         />
                         <RegInput
-                            value={email}
+                            value={values.email || ""}
+                            name="email"
                             label="E-mail"
                             type="email"
-                            onChange={handleChangeEmail}
+                            onChange={handleChange}
+                            {...errors.email}
                         />
                         <RegInput
-                            value={password}
+                            value={values.password || ""}
+                            name="password"
                             label="Пароль"
                             type="password"
-                            onChange={handleChangePassword}
+                            onChange={handleChange}
+                            {...errors.password}
                         />
                         <RegButton
-                            buttonText="Зарегистрироваться"
+                            buttonText={
+                                isSending ? "Пробуем..." : "Зарегистрироваться"
+                            }
                             spanText="Уже зарегистрированы?"
-                            link="/signin"
+                            link={loggedIn ? "/movies" : "/signin"}
                             linkText="Войти"
+                            isDisabled={!isValid || regError.isError}
+                            {...regError}
                         />
                     </form>
                 </section>
