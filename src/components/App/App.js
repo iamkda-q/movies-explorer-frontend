@@ -5,16 +5,16 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
-import Burger from "../Burger/Burger";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Preloader from "../Preloader/Preloader";
-import { apiAuth, apiUser } from "../../utils/MainApi";
+import { apiAuth, apiMain } from "../../utils/MainApi";
+import getMovies from "../../utils/MovieApi";
 
 function App() {
+    const [isTokenValidated, setTokenValidated] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [burgerOpen, setBurgerOpen] = useState(false);
     const [isSending, setSending] = useState(false);
@@ -22,9 +22,16 @@ function App() {
         name: "",
         email: "",
     });
-    const [isTokenValidated, setTokenValidated] = useState(false);
+    const [movies, setMovies] = React.useState([]);
+    const [savedMovies, setSavedMovies] = useState([]);
 
     const history = useHistory();
+
+    /*     useEffect(() => {
+        localStorage.removeItem("localMovies");
+        localStorage.removeItem("shorts");
+        localStorage.removeItem("keyword");
+    }, []); */
 
     function showBurger() {
         setBurgerOpen(!burgerOpen);
@@ -37,7 +44,7 @@ function App() {
                 .tokenCheck(token)
                 .then((user) => {
                     setLoggedIn(true);
-                    setCurrentUser({ ...user });
+                    setCurrentUser(user);
                     setTokenValidated(true);
                 })
                 .catch(() => {
@@ -55,7 +62,7 @@ function App() {
     const handleSubmitReg = async (values) => {
         setSending(!isSending);
         try {
-            await apiAuth.signUp({ ...values });
+            await apiAuth.signUp(values);
             history.push("/signin");
         } catch (err) {
             const { message } = { ...(await err.json()) };
@@ -68,7 +75,7 @@ function App() {
     const handleSubmitLog = async (values) => {
         setSending(!isSending);
         try {
-            const { token } = await apiAuth.signIn({ ...values });
+            const { token } = await apiAuth.signIn(values);
             localStorage.setItem("usersToken", token);
             setLoggedIn(true);
             history.push("/movies");
@@ -93,8 +100,8 @@ function App() {
     const handleSubmitEdit = async (values) => {
         setSending(!isSending);
         try {
-            const newUser = await apiUser.editProfile({ ...values });
-            setCurrentUser({ ...newUser });
+            const newUser = await apiMain.editProfile(values);
+            setCurrentUser(newUser);
         } catch (err) {
             const { message } =
                 err.status === 409
@@ -106,6 +113,86 @@ function App() {
             throw new Error(message);
         } finally {
             setSending((isSending) => !isSending);
+        }
+    };
+
+    const handleSubmitMovies = async (keyword) => {
+        setSending(!isSending);
+        try {
+            const localMovies = localStorage.getItem("localMovies");
+            if (localMovies) {
+                setMovies(JSON.parse(localMovies));
+            } else {
+                const moviesData = await getMovies();
+                setMovies(moviesData);
+            }
+        } catch (err) {
+            throw new Error(
+                "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+            );
+        } finally {
+            setSending((isSending) => !isSending);
+        }
+    };
+
+    useEffect(() => {
+        (async () => {
+            setSavedMovies(await apiMain.getMovies());
+        })();
+    }, []);
+
+    const handleSaveMovie = async (movie) => {
+        try {
+            const moviesCopy = { ...movie };
+            for (let prop in moviesCopy) {
+                moviesCopy[prop] = moviesCopy[prop] ? moviesCopy[prop] : "Информация отсутствует";
+            }
+            
+            const {
+                country,
+                director,
+                duration,
+                year,
+                description,
+                image,
+                trailerLink,
+                thumbnail,
+                id: movieId,
+                nameRU,
+                nameEN,
+            } = moviesCopy;
+            const savedMovie = await apiMain.saveMovie({
+                country,
+                director,
+                duration,
+                year,
+                description,
+                image,
+                trailerLink,
+                thumbnail,
+                movieId,
+                nameRU,
+                nameEN,
+            });
+            setSavedMovies((movies) => {
+                return [...movies, savedMovie];
+            });
+        } catch (err) {
+            throw new Error("ПЕРЕПИСАТЬ ОШИБКУ");
+        }
+    };
+
+    const handleDeleteMovie = async (id) => {
+        try {
+            const movieForRemove = savedMovies.find(
+                (movie) => movie.movieId === id
+            );
+            await apiMain.deleteMovie(movieForRemove._id);
+            setSavedMovies((movies) =>
+                movies.filter((movie) => movie.movieId !== id)
+            );
+        } catch (err) {
+            throw new Error("ПЕРЕПИСАТЬ ОШИБКУ");
         }
     };
 
@@ -171,25 +258,6 @@ function App() {
                                 />
                                 <ProtectedRoute
                                     component={Main}
-                                    path={["/movies", "/saved-movies", "/"]}
-                                    loggedIn={loggedIn}
-                                    isBurgerOpen={burgerOpen}
-                                    showBurger={showBurger}
-                                    exact
-                                />
-
-                                <ProtectedRoute
-                                    component={Profile}
-                                    path="/profile"
-                                    loggedIn={loggedIn}
-                                    handleSubmitEdit={handleSubmitEdit}
-                                    isSending={isSending}
-                                    handleLogOut={handleLogOut}
-                                    exact
-                                />
-
-                                <ProtectedRoute
-                                    component={Burger}
                                     path={[
                                         "/movies",
                                         "/saved-movies",
@@ -197,8 +265,16 @@ function App() {
                                         "/profile",
                                     ]}
                                     loggedIn={loggedIn}
-                                    isOpen={burgerOpen}
+                                    isBurgerOpen={burgerOpen}
                                     showBurger={showBurger}
+                                    handleSubmitEdit={handleSubmitEdit}
+                                    isSending={isSending}
+                                    handleLogOut={handleLogOut}
+                                    handleSubmitMovies={handleSubmitMovies}
+                                    movies={movies}
+                                    savedMovies={savedMovies}
+                                    handleSaveMovie={handleSaveMovie}
+                                    handleDeleteMovie={handleDeleteMovie}
                                     exact
                                 />
 

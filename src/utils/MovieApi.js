@@ -11,11 +11,12 @@ async function getMovies() {
         if (data.ok) {
             const movies = await data.json();
             movies.forEach(movie => {
-                movie.image.url = `${moviesUrl}/${movie.image.url}`;
+                movie.thumbnail = `${moviesUrl}${movie.image.formats.thumbnail.url}`
+                movie.image = `${moviesUrl}${movie.image.url}`;
             });
             return movies;
         } else {
-            throw new Error("Ошибка на стороне сервера, попробуйте немного позже");
+            return Promise.reject(data)
         }
     } catch(err) {
         return err.message;

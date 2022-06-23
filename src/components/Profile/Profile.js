@@ -14,7 +14,9 @@ function Profile({ handleSubmitEdit, isSending, handleLogOut }) {
         errorText: "",
     });
     const [isSuccess, setSuccess] = useState(false);
-    const inputRef = useRef(null);
+
+    const nameRef = useRef(null);
+    const emailRef = useRef(null);
 
     const handleFocus = (e) => {
         setFocus({ ...isFocus, [e.target.name]: true });
@@ -54,7 +56,7 @@ function Profile({ handleSubmitEdit, isSending, handleLogOut }) {
 
     /* автофокус на первый инпут при нажатии кнопки редактировать */
     useEffect(() => {
-        inputRef.current.focus();
+        nameRef.current.focus();
     }, [isEdit]);
 
     return (
@@ -78,7 +80,7 @@ function Profile({ handleSubmitEdit, isSending, handleLogOut }) {
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         disabled={!isEdit}
-                        ref={inputRef}
+                        ref={nameRef}
                     />
                 </div>
                 <div
@@ -98,6 +100,7 @@ function Profile({ handleSubmitEdit, isSending, handleLogOut }) {
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         disabled={!isEdit}
+                        ref={emailRef}
                     />
                 </div>
                 {isEdit || (
@@ -132,12 +135,12 @@ function Profile({ handleSubmitEdit, isSending, handleLogOut }) {
                             {updateError.isError
                                 ? updateError.errorText
                                 : isSuccess
-                                ? "Данные успешно изменены!"
+                                ? "Данные успешно сохранены!"
                                 : ""}
                         </span>
                         <button
                             className={`profile__button profile__button_save app__link-button-type ${
-                                updateError.isError || isSuccess
+                                updateError.isError || isSuccess || (name === nameRef.current.value && email === emailRef.current.value)
                                     ? "profile__button_disable"
                                     : ""
                             }`}

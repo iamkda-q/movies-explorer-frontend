@@ -3,6 +3,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .movies__img {
@@ -10,7 +11,6 @@
     max-height: 201px;
     object-fit: cover;
     border-radius: 6px;
-    cursor: pointer;
 }
 
 .movies__info {
@@ -35,6 +35,8 @@
     border-radius: 3px;
     background: rgba(249, 249, 249, 1);
     text-align: center;
+    white-space: nowrap;
+    align-self: center;
 }
 
 .movies__save,
@@ -62,7 +64,11 @@
     font-size: 10px;
     line-height: 0.9;
     border: none;
-    transition: opacity .3s linear, visibility .3s linear;
+    transition: opacity .3s linear, visibility .3s linear, background-color .15s linear;
+}
+
+.movies__save:hover{
+    background-color: rgb(190, 185, 185);
 }
 
 .movies__movie:hover .movies__save {
@@ -90,6 +96,7 @@
     left: calc(50% - 4px);
     background-image: url("../../assets/images/saved-icon.svg");
     transition: 0.15s linear;
+    pointer-events: inherit;
 }
 
 .movies__delete:hover {
@@ -97,6 +104,15 @@
 }
 
 .movies__delete:hover::before {
+    background-image: url("../../assets/images/delete-icon.svg");
+}
+
+.movies__save_disabled, .movies__delete_disabled {
+    pointer-events: none;
+    cursor: inherit;
+}
+
+.movies__delete_disabled::before {
     background-image: url("../../assets/images/delete-icon.svg");
 }
 

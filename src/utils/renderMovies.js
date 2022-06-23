@@ -1,30 +1,48 @@
 import { calcTime } from "./constants";
 import MoviesCard from "../components/MoviesCard/MoviesCard";
 
-function renderMovies(movies, shorts, saveFilm) {
-    return movies
-        ? shorts
-            ? movies
-                  .filter((movie) => movie.duration <= 40)
-                  .map((movie) => (
-                      <MoviesCard
-                          key={movie.id}
-                          image={movie.image.url}
-                          name={movie.nameRU}
-                          duration={calcTime(movie.duration)}
-                          saveFilm={saveFilm}
-                      />
-                  ))
-            : movies.map((movie) => (
-                  <MoviesCard
-                      key={movie.id}
-                      image={movie.image.url}
-                      name={movie.nameRU}
-                      duration={calcTime(movie.duration)}
-                      saveFilm={saveFilm}
-                  />
-              ))
-        : null;
-}
+const sortKeyMovies = (movies, keyword) =>
+    movies
+        ? movies.filter((movie) => {
+              const { nameRU: name } = { ...movie };
+              return name.toLowerCase().includes(keyword.toLowerCase());
+          })
+        : "";
 
-export default renderMovies;
+const sortShortMovies = (movies) =>
+    movies ? movies.filter((movie) => movie.duration <= 40) : "";
+
+const renderMovies = (
+    movies,
+    handleSaveMovie,
+    handleDeleteMovie,
+    savedMovies
+) =>
+    movies
+        ? movies.map((movie) => {
+              return (
+                  <MoviesCard
+                      key={movie.id ?? movie._id}
+                      movie={
+                          movie.movieId
+                              ? movie
+                              : { movieId: movie.id, ...movie }
+                      }
+                      duration={calcTime(movie.duration)}
+                      handleSaveMovie={handleSaveMovie}
+                      handleDeleteMovie={handleDeleteMovie}
+                      isSave={
+                          Array.isArray(savedMovies) && savedMovies.length !== 0
+                              ? savedMovies.some(
+                                    (savedMovie) =>
+                                        savedMovie.movieId ===
+                                        (movie.id || movie.movieId)
+                                )
+                              : false
+                      }
+                  />
+              );
+          })
+        : null;
+
+export { renderMovies, sortKeyMovies, sortShortMovies };

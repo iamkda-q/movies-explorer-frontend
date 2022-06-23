@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import "./Main.css";
 import Preview from "../Preview/Preview";
@@ -7,31 +7,109 @@ import AboutProject from "../AboutProject/AboutProject";
 import AboutMe from "../AboutMe/AboutMe";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import MoviesCard from "../MoviesCard/MoviesCard";
 import More from "../More/More";
 import SavedDivider from "../SavedDivider/SavedDivider";
 import Burger from "../Burger/Burger";
-import getMovies from "../../utils/MovieApi";
-import renderMovies from "../../utils/renderMovies";
+import Preloader from "../Preloader/Preloader";
+import Profile from "../Profile/Profile";
+import {
+    renderMovies,
+    sortShortMovies,
+    sortKeyMovies,
+} from "../../utils/renderMovies";
 
-function Main({ isBurgerOpen, showBurger }) {
-    const [movies, setMovies] = React.useState([]);
-    const [savedMovies, setSavedMovies] = React.useState([]);
-    const [shorts, setShorts] = React.useState(false);
+function Main({
+    isBurgerOpen,
+    showBurger,
+    handleSubmitEdit,
+    isSending,
+    handleLogOut,
+    handleSubmitMovies,
+    movies,
+    savedMovies,
+    handleSaveMovie,
+    handleDeleteMovie,
+}) {
 
-    const changeShorts = () => {
+    const [keyword, setKeyword] = useState(null);
+    const [shorts, setShorts] = useState(false);
+    const [emptyRes, setEmptyRes] = useState(null);
+    const [renderedMovies, setRenderedMovies] = useState([]);
+
+    const [keywordSaved, setKeywordSaved] = useState(null);
+    const [shortsSaved, setShortsSaved] = useState(false);
+    const [emptySave, setEmptySave] = useState(null);
+    const [renderedSavedMovies, setRenderedSavedMovies] = useState([]);
+
+    const [renderNumber, setRenderNumber] = useState(1);
+
+    /* 
+                    localStorage.setItem("localMovies", JSON.stringify(moviesData));
+                localStorage.setItem("shorts", JSON.stringify(shorts));
+                localStorage.setItem("keyword", JSON.stringify(keyword)); */
+    
+    const handleShorts = () => {
         setShorts(!shorts);
     };
 
-    const handleSubmitMovies = async () => {
-        const moviesData = await getMovies();
-        console.log(moviesData);
-        setMovies(moviesData.slice(30, 36));
+    const handleShortsSaved = () => {
+        setShortsSaved(!shortsSaved);
     };
 
-    const saveFilm = (name) => {
-        console.log(name);
-    };
+    async function submitMovies(key) {
+        try {
+            setKeyword(key);
+            if (!key) {
+                return
+            }
+            setEmptyRes("Ничего не найдено")
+            await handleSubmitMovies(key);
+        } catch(err) {
+            throw new Error(err.message);
+        }
+    }
+
+    async function filterMovies(key) {
+        try {
+            setKeywordSaved(key);  
+        } catch(err) {
+            throw new Error("Сори, наш сервис дал сбой");
+        }
+    }
+
+
+    function handleMore() {
+        setRenderNumber((renderNumber) => ++renderNumber);
+    }
+
+    useEffect(() => {
+        setRenderedMovies(
+            shorts
+                ? sortShortMovies(sortKeyMovies(movies, keyword))
+                : sortKeyMovies(movies, keyword)
+        );
+    }, [shorts, movies]);
+
+    useEffect(() => {
+        if (savedMovies.length) {
+            setEmptySave("Ничего не найдено");
+        } else {
+            setEmptySave("Пока что нет добавленных фильмов");
+        }
+        setRenderedSavedMovies(
+            keywordSaved
+                ? shortsSaved
+                    ? sortShortMovies(sortKeyMovies(savedMovies, keywordSaved))
+                    : sortKeyMovies(savedMovies, keywordSaved)
+                : shortsSaved
+                ? sortShortMovies(savedMovies)
+                : savedMovies
+        );
+    }, [keywordSaved, shortsSaved, savedMovies]);
+
+    useEffect(() => {
+        setRenderNumber(1);
+    }, [movies]);
 
     return (
         <main>
@@ -42,25 +120,65 @@ function Main({ isBurgerOpen, showBurger }) {
                     <Techs />
                     <AboutMe />
                 </Route>
+
                 <Route path="/movies">
                     <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
                     <SearchForm
-                        handleSubmit={handleSubmitMovies}
+                        key={1}
+                        handleSubmitMovies={submitMovies}
                         shorts={shorts}
-                        changeShorts={changeShorts}
+                        handleShorts={handleShorts}
+                        keyword={keyword}
                     />
-                    <MoviesCardList>
-                        {renderMovies(movies, shorts, saveFilm)}
-                    </MoviesCardList>
-                    <More />
+                    {isSending ? (
+                        <Preloader />
+                    ) : (
+                        <MoviesCardList>
+                            {renderedMovies.length !== 0
+                                ? renderMovies(
+                                      renderedMovies.slice(0, renderNumber * 3),
+                                      handleSaveMovie,
+                                      handleDeleteMovie,
+                                      savedMovies
+                                  )
+                                : emptyRes}
+                        </MoviesCardList>
+                    )}
+                    {renderedMovies.length > 3 &&
+                    renderNumber * 3 < renderedMovies.length ? (
+                        <More handleClick={handleMore} />
+                    ) : null}
                 </Route>
+
                 <Route path="/saved-movies">
                     <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
-                    <SearchForm />
+                    <SearchForm
+                        key={2}
+                        handleSubmitMovies={filterMovies}
+                        shorts={shortsSaved}
+                        handleShorts={handleShortsSaved}
+                        keyword={keywordSaved}
+                    />
                     <MoviesCardList>
-                        {renderMovies(savedMovies, shorts, saveFilm)}
+                        {renderedSavedMovies.length
+                            ? renderMovies(
+                                  renderedSavedMovies,
+                                  handleSaveMovie,
+                                  handleDeleteMovie,
+                                  savedMovies
+                              )
+                            : emptySave}
                     </MoviesCardList>
                     <SavedDivider />
+                </Route>
+
+                <Route path="/profile">
+                    <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
+                    <Profile
+                        handleSubmitEdit={handleSubmitEdit}
+                        isSending={isSending}
+                        handleLogOut={handleLogOut}
+                    />
                 </Route>
             </Switch>
         </main>

@@ -16,19 +16,12 @@ export const apiAuth = {
         }
     },
 
-    async signUp({ email, password, name }) {
-        return await this._fetch("signup", "POST", {
-            email,
-            password,
-            name,
-        });
+    async signUp(body) {
+        return await this._fetch("signup", "POST", body);
     },
 
-    async signIn({ email, password }) {
-        return await this._fetch("signin", "POST", {
-            email,
-            password,
-        });
+    async signIn(body) {
+        return await this._fetch("signin", "POST", body);
     },
 
     async tokenCheck(token) {
@@ -44,16 +37,9 @@ export const apiAuth = {
         }
         return Promise.reject(res);
     },
-
-    async editProfile({ email, name }) {
-        return await this._fetch("users/me", "PATCH", {
-            email,
-            name,
-        });
-    }
 };
 
-export const apiUser = {
+export const apiMain = {
     mainUrl: "https://api.movies-exp-iamkda-q.nomoredomains.xyz",
 
     async _fetch(relUrl, method = "GET", body = undefined) {
@@ -72,10 +58,19 @@ export const apiUser = {
         }
     },
 
-    async editProfile({ email, name }) {
-        return await this._fetch("users/me", "PATCH", {
-            email,
-            name,
-        });
+    async editProfile(body) {
+        return await this._fetch("users/me", "PATCH", body);
+    },
+
+    async getMovies() {
+        return await this._fetch("movies");
+    },
+
+    async saveMovie(movie) {
+        return await this._fetch("movies", "POST", movie);
+    },
+
+    async deleteMovie(id) {
+        return await this._fetch(`movies\\${id}`, "DELETE");
     }
 };

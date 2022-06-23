@@ -1,3 +1,7 @@
+body::-webkit-scrollbar {
+    display: none; /*chrome*/
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -47,9 +51,7 @@
     margin: 0 auto;
 }
 
-
 @media screen and (max-width: 850px) {
-
     .app__position {
         padding: 0 50px;
     }
@@ -57,11 +59,9 @@
     .app__reg-container {
         width: calc(39600vw / 768);
     }
-
 }
 
 @media screen and (max-width: 550px) {
-
     .app__position {
         padding: 0 18px;
     }
@@ -69,5 +69,4 @@
     .app__reg-container {
         width: calc(26000vw / 320);
     }
-
 }
