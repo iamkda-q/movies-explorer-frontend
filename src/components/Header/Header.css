@@ -1,3 +1,7 @@
+.header {
+    flex: 0 0 auto;
+}
+
 .header_land {
     background-color: rgba(243, 193, 248, 1);
 }

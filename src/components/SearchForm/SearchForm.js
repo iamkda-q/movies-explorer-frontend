@@ -19,10 +19,6 @@ function SearchForm({ handleSubmitMovies, shorts, handleShorts, keyword }) {
             await handleSubmitMovies(key);
         } catch (err) {
             console.log(err.message);
-/*             setUpdateError({
-                isError: true,
-                errorText: err.message,
-            }); */
         }
     };
 

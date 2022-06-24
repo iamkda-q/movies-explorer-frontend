@@ -215,7 +215,7 @@ function App() {
                         <Switch>
                             <Route path="/signin">
                                 {loggedIn ? (
-                                    <Redirect to="/profile" />
+                                    <Redirect to="/" />
                                 ) : (
                                     <Login
                                         handleSubmitLog={handleSubmitLog}
@@ -226,7 +226,7 @@ function App() {
 
                             <Route path="/signup">
                                 {loggedIn ? (
-                                    <Redirect to="/profile" />
+                                    <Redirect to="/" />
                                 ) : (
                                     <Register
                                         loggedIn={loggedIn}

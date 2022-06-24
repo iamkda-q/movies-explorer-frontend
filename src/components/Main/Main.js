@@ -41,7 +41,10 @@ function Main({
     const [emptySave, setEmptySave] = useState(null);
     const [renderedSavedMovies, setRenderedSavedMovies] = useState([]);
 
-    const [renderNumber, setRenderNumber] = useState(1);
+    const [renderNumber, setRenderNumber] = useState({
+        rows: 1,
+        columns: 3,
+    });
 
     /* 
                     localStorage.setItem("localMovies", JSON.stringify(moviesData));
@@ -79,7 +82,10 @@ function Main({
 
 
     function handleMore() {
-        setRenderNumber((renderNumber) => ++renderNumber);
+        setRenderNumber(renderNumber => ({
+            ...renderNumber,
+            rows: renderNumber.rows + 1
+        }));
     }
 
     useEffect(() => {
@@ -107,12 +113,34 @@ function Main({
         );
     }, [keywordSaved, shortsSaved, savedMovies]);
 
+
+    window.addEventListener("resize", () => {
+        const width = document.documentElement.clientWidth;
+/*         setTimeout(() => {
+            if 
+            setRenderNumber(renderNumber => ({
+                ...renderNumber,
+                columns: renderNumber.rows + 1
+            }));
+        }, 1000) */
+    });
+
+/*     useEffect(() => {
+        setRenderNumber({
+            rows: 1,
+            columns: 3,
+        });
+    }, [movies]); */
+
     useEffect(() => {
-        setRenderNumber(1);
-    }, [movies]);
+        setRenderNumber({
+            rows: 4,
+            columns: 3,
+        });
+    }, []);
 
     return (
-        <main>
+        <main className="main">
             <Switch>
                 <Route exact path="/">
                     <Preview />
@@ -136,7 +164,7 @@ function Main({
                         <MoviesCardList>
                             {renderedMovies.length !== 0
                                 ? renderMovies(
-                                      renderedMovies.slice(0, renderNumber * 3),
+                                      renderedMovies.slice(0, renderNumber.rows * renderNumber.columns),
                                       handleSaveMovie,
                                       handleDeleteMovie,
                                       savedMovies
@@ -145,7 +173,7 @@ function Main({
                         </MoviesCardList>
                     )}
                     {renderedMovies.length > 3 &&
-                    renderNumber * 3 < renderedMovies.length ? (
+                    renderNumber.rows * renderNumber.columns < renderedMovies.length ? (
                         <More handleClick={handleMore} />
                     ) : null}
                 </Route>
