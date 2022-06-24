@@ -8,7 +8,6 @@ import AboutMe from "../AboutMe/AboutMe";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import More from "../More/More";
-import SavedDivider from "../SavedDivider/SavedDivider";
 import Burger from "../Burger/Burger";
 import Preloader from "../Preloader/Preloader";
 import Profile from "../Profile/Profile";
@@ -29,10 +28,10 @@ function Main({
     savedMovies,
     handleSaveMovie,
     handleDeleteMovie,
+    loggedIn
 }) {
-
-    const [keyword, setKeyword] = useState(null);
-    const [shorts, setShorts] = useState(false);
+    const [keyword, setKeyword] = useState(localStorage.getItem("keyword") ? JSON.parse(localStorage.getItem("keyword")) : "");
+    const [shorts, setShorts] = useState(localStorage.getItem("shorts") ? JSON.parse(localStorage.getItem("shorts")) : false);
     const [emptyRes, setEmptyRes] = useState(null);
     const [renderedMovies, setRenderedMovies] = useState([]);
 
@@ -41,16 +40,8 @@ function Main({
     const [emptySave, setEmptySave] = useState(null);
     const [renderedSavedMovies, setRenderedSavedMovies] = useState([]);
 
-    const [renderNumber, setRenderNumber] = useState({
-        rows: 1,
-        columns: 3,
-    });
+    const [renderNumber, setRenderNumber] = useState({});
 
-    /* 
-                    localStorage.setItem("localMovies", JSON.stringify(moviesData));
-                localStorage.setItem("shorts", JSON.stringify(shorts));
-                localStorage.setItem("keyword", JSON.stringify(keyword)); */
-    
     const handleShorts = () => {
         setShorts(!shorts);
     };
@@ -61,39 +52,35 @@ function Main({
 
     async function submitMovies(key) {
         try {
-            setKeyword(key);
             if (!key) {
-                return
+                return;
             }
-            setEmptyRes("Ничего не найдено")
+            setKeyword(key);
+            setEmptyRes("Ничего не найдено");
             await handleSubmitMovies(key);
-        } catch(err) {
+        } catch (err) {
             throw new Error(err.message);
         }
     }
 
     async function filterMovies(key) {
         try {
-            setKeywordSaved(key);  
-        } catch(err) {
+            setKeywordSaved(key);
+        } catch (err) {
             throw new Error("Сори, наш сервис дал сбой");
         }
     }
 
-
-    function handleMore() {
-        setRenderNumber(renderNumber => ({
-            ...renderNumber,
-            rows: renderNumber.rows + 1
-        }));
-    }
-
     useEffect(() => {
-        setRenderedMovies(
-            shorts
-                ? sortShortMovies(sortKeyMovies(movies, keyword))
-                : sortKeyMovies(movies, keyword)
-        );
+        if (Array.isArray(movies) && movies.length !== 0) {
+            setRenderedMovies(
+                shorts
+                    ? sortShortMovies(sortKeyMovies(movies, keyword))
+                    : sortKeyMovies(movies, keyword)
+            );
+            localStorage.setItem("keyword", JSON.stringify(keyword));
+            localStorage.setItem("shorts", JSON.stringify(shorts));
+        }
     }, [shorts, movies]);
 
     useEffect(() => {
@@ -102,45 +89,75 @@ function Main({
         } else {
             setEmptySave("Пока что нет добавленных фильмов");
         }
-        setRenderedSavedMovies(
-            keywordSaved
-                ? shortsSaved
-                    ? sortShortMovies(sortKeyMovies(savedMovies, keywordSaved))
-                    : sortKeyMovies(savedMovies, keywordSaved)
-                : shortsSaved
-                ? sortShortMovies(savedMovies)
-                : savedMovies
-        );
+        if (Array.isArray(savedMovies) && savedMovies.length !== 0) {
+            setRenderedSavedMovies(
+                keywordSaved
+                    ? shortsSaved
+                        ? sortShortMovies(sortKeyMovies(savedMovies, keywordSaved))
+                        : sortKeyMovies(savedMovies, keywordSaved)
+                    : shortsSaved
+                    ? sortShortMovies(savedMovies)
+                    : savedMovies
+            );
+        }
+
     }, [keywordSaved, shortsSaved, savedMovies]);
 
+    const calcMoviesNumber = (width) => {
+        if (width <= 550) {
+            return {
+                rows: 5,
+                columns: 1,
+            };
+        } else if (width <= 850) {
+            return {
+                rows: 4,
+                columns: 2,
+            };
+        } else {
+            return {
+                rows: 4,
+                columns: 3,
+            };
+        }
+    };
 
-    window.addEventListener("resize", () => {
-        const width = document.documentElement.clientWidth;
-/*         setTimeout(() => {
-            if 
-            setRenderNumber(renderNumber => ({
-                ...renderNumber,
-                columns: renderNumber.rows + 1
-            }));
-        }, 1000) */
-    });
-
-/*     useEffect(() => {
-        setRenderNumber({
-            rows: 1,
-            columns: 3,
-        });
-    }, [movies]); */
+    window.addEventListener("resize", resizeThrottler, false);
+    let resizeTimeout = null;
+    function resizeThrottler() {
+        if (!resizeTimeout) {
+            resizeTimeout = setTimeout(function () {
+                resizeTimeout = null;
+                actualResizeHandler();
+            }, 3000);
+        }
+    }
+    function actualResizeHandler() {
+        const { rows, columns } = calcMoviesNumber(
+            document.documentElement.clientWidth
+        );
+        if (rows !== renderNumber.rows || columns !== renderNumber.columns) {
+            setRenderNumber({ rows, columns });
+        }
+    }
 
     useEffect(() => {
-        setRenderNumber({
-            rows: 4,
-            columns: 3,
-        });
+        setRenderNumber(calcMoviesNumber(document.documentElement.clientWidth));
+        if (JSON.parse(localStorage.getItem("keyword") !== null)) {
+            submitMovies(keyword);
+        }
     }, []);
+
+    function handleMore() {
+        setRenderNumber((renderNumber) => ({
+            ...renderNumber,
+            rows: renderNumber.rows + (renderNumber.columns === 1 ? 2 : 1),
+        }));
+    }
 
     return (
         <main className="main">
+            <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
             <Switch>
                 <Route exact path="/">
                     <Preview />
@@ -150,7 +167,6 @@ function Main({
                 </Route>
 
                 <Route path="/movies">
-                    <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
                     <SearchForm
                         key={1}
                         handleSubmitMovies={submitMovies}
@@ -164,7 +180,11 @@ function Main({
                         <MoviesCardList>
                             {renderedMovies.length !== 0
                                 ? renderMovies(
-                                      renderedMovies.slice(0, renderNumber.rows * renderNumber.columns),
+                                      renderedMovies.slice(
+                                          0,
+                                          renderNumber.rows *
+                                              renderNumber.columns
+                                      ),
                                       handleSaveMovie,
                                       handleDeleteMovie,
                                       savedMovies
@@ -173,13 +193,13 @@ function Main({
                         </MoviesCardList>
                     )}
                     {renderedMovies.length > 3 &&
-                    renderNumber.rows * renderNumber.columns < renderedMovies.length ? (
+                    renderNumber.rows * renderNumber.columns <
+                        renderedMovies.length ? (
                         <More handleClick={handleMore} />
                     ) : null}
                 </Route>
 
                 <Route path="/saved-movies">
-                    <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
                     <SearchForm
                         key={2}
                         handleSubmitMovies={filterMovies}
@@ -197,11 +217,9 @@ function Main({
                               )
                             : emptySave}
                     </MoviesCardList>
-                    <SavedDivider />
                 </Route>
 
                 <Route path="/profile">
-                    <Burger isOpen={isBurgerOpen} showBurger={showBurger} />
                     <Profile
                         handleSubmitEdit={handleSubmitEdit}
                         isSending={isSending}

@@ -2,15 +2,17 @@ import { calcTime } from "./constants";
 import MoviesCard from "../components/MoviesCard/MoviesCard";
 
 const sortKeyMovies = (movies, keyword) =>
-    movies
+    Array.isArray(movies) && movies.length !== 0 && keyword !== ""
         ? movies.filter((movie) => {
               const { nameRU: name } = { ...movie };
               return name.toLowerCase().includes(keyword.toLowerCase());
           })
-        : "";
+        : [];
 
 const sortShortMovies = (movies) =>
-    movies ? movies.filter((movie) => movie.duration <= 40) : "";
+    Array.isArray(movies) && movies.length !== 0
+        ? movies.filter((movie) => movie.duration <= 40)
+        : [];
 
 const renderMovies = (
     movies,
@@ -18,7 +20,7 @@ const renderMovies = (
     handleDeleteMovie,
     savedMovies
 ) =>
-    movies
+    Array.isArray(movies) && movies.length !== 0
         ? movies.map((movie) => {
               return (
                   <MoviesCard

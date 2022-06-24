@@ -17,6 +17,7 @@ function Burger( {isOpen, showBurger}) {
                             className="burger__link app__link"
                             activeClassName="burger__link_active"
                             exact
+                            onClick={showBurger}
                         >
                             Главная
                         </NavLink>
@@ -27,6 +28,7 @@ function Burger( {isOpen, showBurger}) {
                             className="burger__link app__link"
                             title="Фильмы"
                             activeClassName="burger__link_active"
+                            onClick={showBurger}
                         >
                             Фильмы
                         </NavLink>
@@ -37,6 +39,7 @@ function Burger( {isOpen, showBurger}) {
                             className="burger__link app__link"
                             title="Сохранённые фильмы"
                             activeClassName="burger__link_active"
+                            onClick={showBurger}
                         >
                             Сохранённые фильмы
                         </NavLink>
@@ -45,6 +48,7 @@ function Burger( {isOpen, showBurger}) {
                         <Link
                             to="/profile"
                             className="burger__link app__link"
+                            onClick={showBurger}
                         >
                             <Account />
                         </Link>

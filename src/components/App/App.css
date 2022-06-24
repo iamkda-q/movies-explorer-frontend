@@ -19,6 +19,12 @@ body::-webkit-scrollbar {
     font-weight: normal;
     display: flex;
     flex-direction: column;
+    overflow: auto;
+}
+
+.app_stopped {
+    overflow: hidden;
+    height: 100vh;
 }
 
 .app__link,

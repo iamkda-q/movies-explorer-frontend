@@ -11,38 +11,36 @@ function MoviesCard({
     isSave = false,
 }) {
     const [isSending, setSending] = useState(false);
-    const saveMovie = async () => {
+    const saveMovie = async (e) => {
+        e.stopPropagation();
         setSending(true);
         try {
             await handleSaveMovie(movie);
         } catch (err) {
             console.log(err.message);
-            /*             setUpdateError({
-                isError: true,
-                errorText: err.message,
-            }); */
         } finally {
             setSending(false);
         }
     };
 
-    const deleteMovie = async () => {
+    const deleteMovie = async (e) => {
+        e.stopPropagation();
         setSending(true);
         try {
             await handleDeleteMovie(movie.movieId);
         } catch (err) {
             console.log(err.message);
-            /*             setUpdateError({
-                isError: true,
-                errorText: err.message,
-            }); */
         } finally {
             setSending(false);
         }
     };
 
+    const openTrailer = () => {
+        window.open(movie.trailerLink) ;
+    };
+
     return (
-        <div className="movies__movie">
+        <div className="movies__movie" onClick={openTrailer}>
             <img
                 src={movie.image}
                 alt={`Заставка фильма "${movie.nameRU}"`}

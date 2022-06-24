@@ -1,4 +1,3 @@
-// import { Route } from "react-router-dom";
 import React, { useRef, useState } from "react";
 import "./SearchForm.css";
 import searchIcon from "../../assets/images/search-icon.svg";
