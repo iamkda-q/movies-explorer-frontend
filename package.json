@@ -17,7 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* iamkda-q@51.250.28.65:/home/iamkda-q/movies-explorer-frontend"
+    "deploy": "npm run build && scp -r ./build/* iamkda-q@84.201.177.116:/home/iamkda-q/movies-explorer-frontend"
   },
   "homepage": ".",
   "eslintConfig": {
