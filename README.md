@@ -1,1 +1,1 @@
-Пробный полурабочий деплой: http://movies-exp-iamkda-q.nomoreparties.sbs/
+Деплой: https://movies-exp-iamkda-q.nomoreparties.sbs/
