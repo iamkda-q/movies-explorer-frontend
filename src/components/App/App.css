@@ -1,6 +1,6 @@
-body::-webkit-scrollbar {
-    display: none; /*chrome*/
-}
+/* body::-webkit-scrollbar {
+    display: none; 
+} */
 
 * {
     box-sizing: border-box;

@@ -69,7 +69,7 @@ function Register({ loggedIn, handleSubmitReg, isSending }) {
                             spanText="Уже зарегистрированы?"
                             link={loggedIn ? "/movies" : "/signin"}
                             linkText="Войти"
-                            isDisabled={!isValid || regError.isError}
+                            isDisabled={!isValid || regError.isError || isSending}
                             {...regError}
                         />
                     </form>

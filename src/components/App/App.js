@@ -14,6 +14,8 @@ import Preview from "../Preview/Preview";
 import AboutProject from "../AboutProject/AboutProject";
 import Techs from "../Techs/Techs";
 import AboutMe from "../AboutMe/AboutMe";
+import InfoToolTip from "../InfoToolTip/InfoToolTip";
+
 
 import { apiAuth, apiMain } from "../../utils/MainApi";
 import getMovies from "../../utils/MovieApi";
@@ -29,6 +31,7 @@ function App() {
     });
     const [movies, setMovies] = React.useState([]);
     const [savedMovies, setSavedMovies] = useState([]);
+    const [isInfoOpen, setInfoOpen] = useState(false);
 
     const history = useHistory();
 
@@ -47,7 +50,7 @@ function App() {
                     setTokenValidated(true);
                 })
                 .catch(() => {
-                    console.log("Не удалось войти в систему");
+                    history.push("/signin");
                 });
         } else {
             setTokenValidated(true);
@@ -102,7 +105,7 @@ function App() {
         localStorage.removeItem("keyword");
         setLoggedIn(false);
         setTokenValidated(false);
-        history.push("/signin");
+        history.push("/");
     };
 
     const handleSubmitEdit = async (values) => {
@@ -191,7 +194,7 @@ function App() {
                 return [...movies, savedMovie];
             });
         } catch (err) {
-            throw new Error("ПЕРЕПИСАТЬ ОШИБКУ");
+            toggleInfoToolTip(!isInfoOpen);
         }
     };
 
@@ -205,9 +208,13 @@ function App() {
                 movies.filter((movie) => movie.movieId !== id)
             );
         } catch (err) {
-            throw new Error("ПЕРЕПИСАТЬ ОШИБКУ");
+            toggleInfoToolTip(!isInfoOpen);
         }
     };
+
+    function toggleInfoToolTip() {
+        setInfoOpen(!isInfoOpen);
+    }
 
     function Landing() {
         return (
@@ -236,102 +243,105 @@ function App() {
     } */
 
     return (
-        <div className={`app ${burgerOpen ? "app_stopped" : ""}`}>
-            {isTokenValidated ? (
-                <>
-                    <CurrentUserContext.Provider value={currentUser}>
-                        <Switch>
-                            <Route path="/signin">
-                                {loggedIn ? (
-                                    <Redirect to="/" />
-                                ) : (
-                                    <Login
-                                        handleSubmitLog={handleSubmitLog}
-                                        isSending={isSending}
-                                    />
-                                )}
-                            </Route>
-
-                            <Route path="/signup">
-                                {loggedIn ? (
-                                    <Redirect to="/" />
-                                ) : (
-                                    <Register
-                                        loggedIn={loggedIn}
-                                        handleSubmitReg={handleSubmitReg}
-                                        isSending={isSending}
-                                    />
-                                )}
-                            </Route>
-
-                            {!loggedIn ? (
-                                <Route exact path="/">
-                                    <Landing />
+        <Route>
+            <div className={`app ${burgerOpen ? "app_stopped" : ""}`}>
+                {isTokenValidated ? (
+                    <>
+                        <CurrentUserContext.Provider value={currentUser}>
+                            <Switch>
+                                <Route path="/signin">
+                                    {loggedIn ? (
+                                        <Redirect to="/" />
+                                    ) : (
+                                        <Login
+                                            handleSubmitLog={handleSubmitLog}
+                                            isSending={isSending}
+                                        />
+                                    )}
                                 </Route>
-                            ) : null}
 
-                            <Route
-                                path={[
-                                    "/movies",
-                                    "/saved-movies",
-                                    "/",
-                                    "/profile",
-                                ]}
-                                exact
-                            >
-                                <ProtectedRoute
-                                    component={Header}
+                                <Route path="/signup">
+                                    {loggedIn ? (
+                                        <Redirect to="/" />
+                                    ) : (
+                                        <Register
+                                            loggedIn={loggedIn}
+                                            handleSubmitReg={handleSubmitReg}
+                                            isSending={isSending}
+                                        />
+                                    )}
+                                </Route>
+
+                                {!loggedIn ? (
+                                    <Route exact path="/">
+                                        <Landing />
+                                    </Route>
+                                ) : null}
+
+                                <Route
                                     path={[
                                         "/movies",
                                         "/saved-movies",
                                         "/",
                                         "/profile",
                                     ]}
-                                    loggedIn={loggedIn}
-                                    showBurger={showBurger}
                                     exact
-                                />
+                                >
+                                    <InfoToolTip isOpen={isInfoOpen} closePopup={toggleInfoToolTip}/>
+                                    <ProtectedRoute
+                                        component={Header}
+                                        path={[
+                                            "/movies",
+                                            "/saved-movies",
+                                            "/",
+                                            "/profile",
+                                        ]}
+                                        loggedIn={loggedIn}
+                                        showBurger={showBurger}
+                                        exact
+                                    />
 
-                                <ProtectedRoute
-                                    component={Main}
-                                    path={[
-                                        "/movies",
-                                        "/saved-movies",
-                                        "/",
-                                        "/profile",
-                                    ]}
-                                    loggedIn={loggedIn}
-                                    isBurgerOpen={burgerOpen}
-                                    showBurger={showBurger}
-                                    handleSubmitEdit={handleSubmitEdit}
-                                    isSending={isSending}
-                                    handleLogOut={handleLogOut}
-                                    handleSubmitMovies={handleSubmitMovies}
-                                    movies={movies}
-                                    savedMovies={savedMovies}
-                                    handleSaveMovie={handleSaveMovie}
-                                    handleDeleteMovie={handleDeleteMovie}
-                                    exact
-                                />
+                                    <ProtectedRoute
+                                        component={Main}
+                                        path={[
+                                            "/movies",
+                                            "/saved-movies",
+                                            "/",
+                                            "/profile",
+                                        ]}
+                                        loggedIn={loggedIn}
+                                        isBurgerOpen={burgerOpen}
+                                        showBurger={showBurger}
+                                        handleSubmitEdit={handleSubmitEdit}
+                                        isSending={isSending}
+                                        handleLogOut={handleLogOut}
+                                        handleSubmitMovies={handleSubmitMovies}
+                                        movies={movies}
+                                        savedMovies={savedMovies}
+                                        handleSaveMovie={handleSaveMovie}
+                                        handleDeleteMovie={handleDeleteMovie}
+                                        exact
+                                    />
 
-                                <ProtectedRoute
-                                    component={Footer}
-                                    path={["/movies", "/saved-movies", "/"]}
-                                    loggedIn={loggedIn}
-                                    exact
-                                />
-                            </Route>
+                                    <ProtectedRoute
+                                        component={Footer}
+                                        path={["/movies", "/saved-movies", "/"]}
+                                        loggedIn={loggedIn}
+                                        exact
+                                    />
+                                </Route>
 
-                            <Route path="*">
-                                <NotFound />
-                            </Route>
-                        </Switch>
-                    </CurrentUserContext.Provider>
-                </>
-            ) : (
-                <Preloader />
-            )}
-        </div>
+                                <Route path="*">
+                                    <NotFound />
+                                </Route>
+                            </Switch>
+                        </CurrentUserContext.Provider>
+                    </>
+                ) : (
+                    <Preloader />
+                )}
+            </div>
+        </Route>
     );
 }
 

@@ -1,7 +1,13 @@
-import React, { Fragment, useState, useRef, useEffect, useContext } from "react";
+import React, {
+    Fragment,
+    useState,
+    useRef,
+    useEffect,
+    useContext,
+} from "react";
 import "./Profile.css";
 import { useForm } from "../../utils/useForms";
-import CurrentUserContext from '../../contexts/CurrentUserContext';
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Profile({ handleSubmitEdit, isSending, handleLogOut }) {
     const { name, email } = useContext(CurrentUserContext);
@@ -46,6 +52,7 @@ function Profile({ handleSubmitEdit, isSending, handleLogOut }) {
         try {
             await handleSubmitEdit(values);
             setSuccess(!isSuccess);
+            setEdit(!isEdit);
         } catch (err) {
             setUpdateError({
                 isError: true,
@@ -121,34 +128,39 @@ function Profile({ handleSubmitEdit, isSending, handleLogOut }) {
                         </button>
                     </Fragment>
                 )}
-                {isEdit && (
-                    <div className="profile__button-with-message">
-                        <span
-                            className={`profile__message ${
-                                updateError.isError
-                                    ? "profile__message_error"
-                                    : isSuccess
-                                    ? "profile__message_success"
-                                    : "profile__message_hidden"
-                            }`}
-                        >
-                            {updateError.isError
-                                ? updateError.errorText
+                {/* {isEdit && ( */}
+                <div className="profile__button-with-message">
+                    <span
+                        className={`profile__message ${
+                            updateError.isError
+                                ? "profile__message_error"
                                 : isSuccess
-                                ? "Данные успешно сохранены!"
-                                : ""}
-                        </span>
+                                ? "profile__message_success"
+                                : "profile__message_hidden"
+                        }`}
+                    >
+                        {updateError.isError
+                            ? updateError.errorText
+                            : isSuccess
+                            ? "Данные успешно сохранены!"
+                            : ""}
+                    </span>
+                    {isEdit && (
                         <button
                             className={`profile__button profile__button_save app__link-button-type ${
-                                updateError.isError || isSuccess || (name === nameRef.current.value && email === emailRef.current.value)
+                                updateError.isError ||
+                                isSuccess || isSending ||
+                                (name === nameRef.current.value &&
+                                    email === emailRef.current.value)
                                     ? "profile__button_disable"
                                     : ""
                             }`}
                         >
                             {isSending ? "Сохранение..." : "Сохранить"}
                         </button>
-                    </div>
-                )}
+                    )}
+                </div>
+                {/* )} */}
             </form>
         </section>
     );

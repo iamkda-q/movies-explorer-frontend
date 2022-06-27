@@ -12,4 +12,33 @@ function calcTime(min) {
     return `${currentHours}ч ${currentMinutes}м`;
 }
 
-export { profilePlaceholders, calcTime };
+const FIVECARDS = {
+    width: 550,
+    cards: {
+        rows: 5,
+        columns: 1,
+    },
+    add: 2,
+};
+
+const EIGHTCARDS = {
+    width: 850,
+    cards: {
+        rows: 4,
+        columns: 2,
+    },
+    add: 1,
+};
+
+const TWELVECARDS = {
+    width: 3000,
+    cards: {
+        rows: 4,
+        columns: 3,
+    },
+    add: 1,
+};
+
+const SHORTDURATION = 40;
+
+export { profilePlaceholders, calcTime, FIVECARDS, EIGHTCARDS, TWELVECARDS, SHORTDURATION };

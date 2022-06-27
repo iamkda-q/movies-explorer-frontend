@@ -3,7 +3,7 @@ import "./SearchForm.css";
 import searchIcon from "../../assets/images/search-icon.svg";
 import { useForm } from "../../utils/useForms"
 
-function SearchForm({ handleSubmitMovies, shorts, handleShorts, keyword }) {
+function SearchForm({ handleSubmitMovies, shorts, handleShorts, keyword, isSending }) {
 
     const [placeholder, setPlaceholder] = useState(null);
     const { values, handleChange } = useForm();
@@ -46,7 +46,7 @@ function SearchForm({ handleSubmitMovies, shorts, handleShorts, keyword }) {
                         onFocus={handleFocus}
                     />
                     <label className="search__input-label"></label>
-                    <button type="submit" className="search__button">
+                    <button type="submit" className={`search__button ${isSending ? "search__button_disabled" : ""}`} >
                         Найти
                     </button>
                 </form>

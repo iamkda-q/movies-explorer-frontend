@@ -58,7 +58,7 @@ function Login({ handleSubmitLog, isSending }) {
                             spanText="Ещё не зарегистрированы?"
                             link="/signup"
                             linkText="Регистрация"
-                            isDisabled={!isValid || logError.isError}
+                            isDisabled={!isValid || logError.isError || isSending}
                             {...logError}
                         />
                     </form>

@@ -1,4 +1,4 @@
-import { calcTime } from "./constants";
+import { calcTime, SHORTDURATION } from "./constants";
 import MoviesCard from "../components/MoviesCard/MoviesCard";
 
 const sortKeyMovies = (movies, keyword) =>
@@ -11,7 +11,7 @@ const sortKeyMovies = (movies, keyword) =>
 
 const sortShortMovies = (movies) =>
     Array.isArray(movies) && movies.length !== 0
-        ? movies.filter((movie) => movie.duration <= 40)
+        ? movies.filter((movie) => movie.duration <= SHORTDURATION)
         : [];
 
 const renderMovies = (

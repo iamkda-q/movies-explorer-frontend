@@ -17,6 +17,8 @@ import {
     sortKeyMovies,
 } from "../../utils/renderMovies";
 
+import { FIVECARDS, EIGHTCARDS, TWELVECARDS } from "../../utils/constants";
+
 function Main({
     isBurgerOpen,
     showBurger,
@@ -28,10 +30,18 @@ function Main({
     savedMovies,
     handleSaveMovie,
     handleDeleteMovie,
-    loggedIn
+    loggedIn,
 }) {
-    const [keyword, setKeyword] = useState(localStorage.getItem("keyword") ? JSON.parse(localStorage.getItem("keyword")) : "");
-    const [shorts, setShorts] = useState(localStorage.getItem("shorts") ? JSON.parse(localStorage.getItem("shorts")) : false);
+    const [keyword, setKeyword] = useState(
+        localStorage.getItem("keyword")
+            ? JSON.parse(localStorage.getItem("keyword"))
+            : ""
+    );
+    const [shorts, setShorts] = useState(
+        localStorage.getItem("shorts")
+            ? JSON.parse(localStorage.getItem("shorts"))
+            : false
+    );
     const [emptyRes, setEmptyRes] = useState(null);
     const [renderedMovies, setRenderedMovies] = useState([]);
 
@@ -59,6 +69,7 @@ function Main({
             setEmptyRes("Ничего не найдено");
             await handleSubmitMovies(key);
         } catch (err) {
+            setEmptyRes(err.message);
             throw new Error(err.message);
         }
     }
@@ -93,32 +104,24 @@ function Main({
             setRenderedSavedMovies(
                 keywordSaved
                     ? shortsSaved
-                        ? sortShortMovies(sortKeyMovies(savedMovies, keywordSaved))
+                        ? sortShortMovies(
+                              sortKeyMovies(savedMovies, keywordSaved)
+                          )
                         : sortKeyMovies(savedMovies, keywordSaved)
                     : shortsSaved
                     ? sortShortMovies(savedMovies)
                     : savedMovies
             );
         }
-
     }, [keywordSaved, shortsSaved, savedMovies]);
 
     const calcMoviesNumber = (width) => {
-        if (width <= 550) {
-            return {
-                rows: 5,
-                columns: 1,
-            };
-        } else if (width <= 850) {
-            return {
-                rows: 4,
-                columns: 2,
-            };
+        if (width <= FIVECARDS.width) {
+            return FIVECARDS.cards;
+        } else if (width <= EIGHTCARDS.width) {
+            return EIGHTCARDS.cards;
         } else {
-            return {
-                rows: 4,
-                columns: 3,
-            };
+            return TWELVECARDS.cards;
         }
     };
 
@@ -151,7 +154,7 @@ function Main({
     function handleMore() {
         setRenderNumber((renderNumber) => ({
             ...renderNumber,
-            rows: renderNumber.rows + (renderNumber.columns === 1 ? 2 : 1),
+            rows: renderNumber.rows + (renderNumber.columns === FIVECARDS.cards.columns ? FIVECARDS.add : EIGHTCARDS.add),
         }));
     }
 
@@ -173,6 +176,7 @@ function Main({
                         shorts={shorts}
                         handleShorts={handleShorts}
                         keyword={keyword}
+                        isSending={isSending}
                     />
                     {isSending ? (
                         <Preloader />
