@@ -15,15 +15,29 @@ function AboutMe() {
                         фронтенд&#8209;разработчик), 25 лет
                     </p>
                     <p className="about-me__about">
-                        Я родился и живу в Саратове, закончил факультет
-                        экономики СГУ. У меня есть жена и дочь. Я люблю слушать
-                        музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С
-                        2015 года работал в компании «СКБ Контур». После того,
-                        как прошёл курс по веб-разработке, начал заниматься
-                        фриланс-заказами и ушёл с постоянной работы.
+                        Я родился в Дзержинске, после школы переехал учиться в
+                        Москву, закончил кафедру автоматизированного
+                        электропривода Московского энергетического института. В
+                        настоящее время работаю по образованию инженером в
+                        небольшой фирме. Кодил ещё в институте на C++ по учёбе,
+                        Web-кодингом начал заниматься с сентября 2021 года.
+                        Коммерческого опыта, как веб-разработчик, не имею, но
+                        очень стремлюсь к этому.
                     </p>
-                    <a className="about-me__link app__link" href="https://vk.com/id107695180" target="blank">VK</a>
-                    <a className="about-me__link app__link" href="https://github.com/iamkda-q" target="blank">Github</a>
+                    <a
+                        className="about-me__link app__link"
+                        href="https://vk.com/id107695180"
+                        target="blank"
+                    >
+                        VK
+                    </a>
+                    <a
+                        className="about-me__link app__link"
+                        href="https://github.com/iamkda-q"
+                        target="blank"
+                    >
+                        Github
+                    </a>
                 </div>
                 <img
                     src={photo}
@@ -34,19 +48,30 @@ function AboutMe() {
             <h3 className="about-me__portfolio">Портфолио</h3>
             <ul className="about-me__projects">
                 <li className="about-me__project">
-                    <a className="about-me__project-link app__link" href="https://iamkda-q.github.io/cssMemSlider/cssMemSlider/" target="blank">
+                    <a
+                        className="about-me__project-link app__link"
+                        href="https://iamkda-q.github.io/virtual-keyboard/"
+                        target="blank"
+                    >
                         <p>Статичный сайт</p>
                         <div className="about-me__link-icon"></div>
                     </a>
                 </li>
                 <li className="about-me__project">
-                    <a className="about-me__project-link app__link" href="https://rolling-scopes-school.github.io/iamkda-q-JSFE2022Q1/shelter/main/" target="blank">
+                    <a
+                        className="about-me__project-link app__link"
+                        href="https://rolling-scopes-school.github.io/iamkda-q-JSFE2022Q1/shelter/main/"
+                        target="blank"
+                    >
                         <p>Адаптивный сайт</p>
                         <div className="about-me__link-icon"></div>
                     </a>
                 </li>
                 <li className="about-me__project">
-                    <Link className="about-me__project-link app__link" to="/movies">
+                    <Link
+                        className="about-me__project-link app__link"
+                        to="/movies"
+                    >
                         <p>Одностраничное приложение</p>
                         <div className="about-me__link-icon"></div>
                     </Link>

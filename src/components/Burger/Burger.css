@@ -54,8 +54,12 @@
     left: 0;
 }
 
-.burger__item:last-of-type {
-    margin-top: 621px;
+.burger__item:nth-of-type(3) {
+    flex: 1 0 auto;
+}
+
+.burger__item {
+    flex: 0 0 auto;
 }
 
 .burger__close {
@@ -99,8 +103,10 @@
     .burger__container_hidden {
         right: -100vw;
     }
+}
 
-    .burger__item:last-of-type {
-        margin-top: 444px;
+@media screen and (min-width: 551px) {
+    .burger__close {
+        right: 44px;
     }
 }

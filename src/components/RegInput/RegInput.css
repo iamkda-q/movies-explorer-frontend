@@ -28,12 +28,13 @@
 }
 
 .reg-input__label,
-.reg-input__error  {
+.reg-input__error {
     font-size: 10px;
     line-height: 1.2;
 }
 
 .reg-input__label {
+    padding-top: 5px;
     color: rgba(160, 160, 160, 1);
 }
 
@@ -47,16 +48,25 @@
     background-color: rgba(249, 249, 249, 1);
     border-radius: 8px;
     padding: 15px;
-    margin: 10px 0 20px;
+    margin: 10px 0 25px;
 }
 
 .reg-input__input:focus {
-    animation: smoorf-outline .6s ease-in-out forwards;
+    animation: smoorf-outline 0.6s ease-in-out forwards;
 }
 
 .reg-input__error {
     color: rgba(255, 64, 98, 1);
     position: absolute;
-    bottom: 0;
+    top: calc(
+        10px * 1.2 + 5px + 13px * 1.23 + 15px * 2 + 10px + 2px
+            /* последний для красоты */
+    );
     text-align: start;
+    opacity: 1;
+    transition: 0.5s linear;
+}
+
+.reg-input__error_hidden {
+    opacity: 0;
 }

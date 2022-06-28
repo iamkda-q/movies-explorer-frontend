@@ -1,0 +1,118 @@
+.popup {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.2s linear;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.popup_opened {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup__container {
+    position: relative;
+    cursor: default;
+    width: 430px;
+    min-height: 330px;
+    background-color: #fff;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 60px 36px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup__picture {
+    width: 120px;
+    min-height: 120px;
+    margin: 0 auto;
+}
+
+.popup__option {
+    margin: 0;
+    margin-bottom: 47px;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 1.21;
+    color: #000;
+}
+
+@media screen and (max-width: 560px) {
+    .popup__option {
+        font-size: 18px;
+        line-height: 1.22;
+        margin-bottom: 75px;
+    }
+}
+
+.popup__option_reg {
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.popup__close-button {
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: calc(100% + 8px);
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .popup__close-button::before,
+  .popup__close-button::after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 2.5px);
+    left: calc(50% - 21px);
+    border-top: 2.5px solid #fff;
+    border-right: 21px solid #fff;
+    border-bottom: 2.5px solid #fff;
+    border-left: 21px solid #fff;
+  }
+  
+  .popup__close-button::before {
+    transform: rotate(-45deg);
+  }
+  
+  .popup__close-button::after {
+    transform: rotate(45deg);
+  }
+  
+  @media screen and (max-width: 560px) {
+    .popup__close-button {
+      width: 20px;
+      height: 20px;
+      bottom: calc(100% + 16px);
+      left: calc(100% - 20px);
+    }
+  
+    .popup__close-button::before,
+    .popup__close-button::after {
+      top: calc(50% - 1.5px);
+      left: calc(50% - 14px);
+      border-top: 1.5px solid #fff;
+      border-right: 14px solid #fff;
+      border-bottom: 1.5px solid #fff;
+      border-left: 14px solid #fff;
+    }
+  }
+  
+  
