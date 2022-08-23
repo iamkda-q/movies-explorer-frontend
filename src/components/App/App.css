@@ -1,3 +1,7 @@
+/* body::-webkit-scrollbar {
+    display: none; 
+} */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,12 +10,21 @@
 
 .app {
     width: 100%;
+    min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
     font-family: "Inter", sans-serif;
     font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.app_stopped {
+    overflow: hidden;
+    height: 100vh;
 }
 
 .app__link,
@@ -47,9 +60,7 @@
     margin: 0 auto;
 }
 
-
 @media screen and (max-width: 850px) {
-
     .app__position {
         padding: 0 50px;
     }
@@ -57,11 +68,9 @@
     .app__reg-container {
         width: calc(39600vw / 768);
     }
-
 }
 
 @media screen and (max-width: 550px) {
-
     .app__position {
         padding: 0 18px;
     }
@@ -69,5 +78,4 @@
     .app__reg-container {
         width: calc(26000vw / 320);
     }
-
 }

@@ -63,6 +63,10 @@
     cursor: pointer;
 }
 
+.search__button_disabled {
+    pointer-events: none;
+}
+
 .search__shorts {
     display: flex;
     align-items: center;

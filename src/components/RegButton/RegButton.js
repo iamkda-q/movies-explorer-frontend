@@ -7,14 +7,22 @@ function RegButton({
     spanText,
     link,
     linkText,
+    isError = false,
     errorText = "При регистрации произошла ошибка",
+    isDisabled,
 }) {
     return (
         <div className="reg-button">
-            <span className="reg-button__error hidden">{errorText}</span>
+            <span
+                className={`reg-button__error ${
+                    isError ? "" : "reg-button__error_hidden"
+                }`}
+            >
+                {errorText}
+            </span>
             <button
                 type="submit"
-                className="reg-button__button app__link-button-type"
+                className={`reg-button__button app__link-button-type ${ isDisabled ? "reg-button__button_disable" : ""}`}
             >
                 {buttonText}
             </button>

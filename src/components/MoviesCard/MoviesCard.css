@@ -3,14 +3,14 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .movies__img {
     width: 100%;
-    max-height: 201px;
+    height: 201px;
     object-fit: cover;
     border-radius: 6px;
-    cursor: pointer;
 }
 
 .movies__info {
@@ -35,6 +35,8 @@
     border-radius: 3px;
     background: rgba(249, 249, 249, 1);
     text-align: center;
+    white-space: nowrap;
+    align-self: center;
 }
 
 .movies__save,
@@ -45,7 +47,14 @@
     height: 21px;
 }
 
+.movies__save:active,
+.movies__delete:active {
+    transform: scale(0.95);
+}
+
 .movies__save {
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
     width: 72px;
     border-radius: 48px;
@@ -55,6 +64,16 @@
     font-size: 10px;
     line-height: 0.9;
     border: none;
+    transition: opacity .3s linear, visibility .3s linear, background-color .15s linear;
+}
+
+.movies__save:hover{
+    background-color: rgb(190, 185, 185);
+}
+
+.movies__movie:hover .movies__save {
+    visibility: visible;
+    opacity: 1;
 }
 
 .movies__delete {
@@ -77,6 +96,7 @@
     left: calc(50% - 4px);
     background-image: url("../../assets/images/saved-icon.svg");
     transition: 0.15s linear;
+    pointer-events: inherit;
 }
 
 .movies__delete:hover {
@@ -87,9 +107,18 @@
     background-image: url("../../assets/images/delete-icon.svg");
 }
 
+.movies__save_disabled, .movies__delete_disabled {
+    pointer-events: none;
+    cursor: inherit;
+}
+
+.movies__delete_disabled::before {
+    background-image: url("../../assets/images/delete-icon.svg");
+}
+
 @media screen and (max-width: 850px) {
     .movies__img {
-        max-height: 190px;
+        height: 190px;
     }
 
     .movies__info {
@@ -99,7 +128,7 @@
 
 @media screen and (max-width: 550px) {
     .movies__img {
-        max-height: calc(16800vw / 320);
+        height: calc(16800vw / 320);
     }
 
     .movies__info {
